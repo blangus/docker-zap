@@ -23,4 +23,16 @@ printf "\n"
 
 docker logs $CONTAINER_ID
 
+# export html or xml report
+case $2 in
+--xmlreport ) echo "printing xml report"
+              wget -O report.xml 172.17.0.1:2375/OTHER/core/other/xmlreport/?formMethod=GET
+              ;;
+
+* ) echo "printing http report"
+    wget -O report.html 172.17.0.1:2375/OTHER/core/other/htmlreport/?formMethod=GET
+    ;;
+esac
+
+
 docker stop $CONTAINER_ID || true && docker rm $CONTAINER_ID || true
